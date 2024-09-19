@@ -1,14 +1,42 @@
-﻿namespace LexiconGame
-{
-    internal class Map
-    {
-        private int width;
-        private int height;
+﻿
+using LexiconGame;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
-        public Map(int width, int height)
+internal class Map
+{
+    private Cell[,] cells;
+    public int Width { get; }
+    public int Height { get; }
+
+    public Map(int width, int height)
+    {
+        Width = width;
+        Height = height;
+
+        cells = new Cell[width, height];
+
+        for (int y = 0; y < height; y++)
         {
-            this.width = width;
-            this.height = height;
+            for (int x = 0; x < width; x++)
+            {
+                cells[y, x] = new Cell();
+            }
+        }
+    }
+
+    //ToDo: Do better
+    //[return: MaybeNull]
+    internal Cell? GetCell(int y, int x)
+    {
+        try
+        {
+            return cells[y, x];
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
         }
     }
 }
